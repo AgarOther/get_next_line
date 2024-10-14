@@ -45,6 +45,13 @@ char	*get_next_line(int fd)
 
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
+	if (!buffer)
+	{
+		buffer = malloc(1);
+		if (!buffer)
+			return (NULL);
+		buffer[0] = 0;
+	}
 	buffer = get_until_newline(buffer, fd);
 	if (!buffer)
 		return (NULL);
