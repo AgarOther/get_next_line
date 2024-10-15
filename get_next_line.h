@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 20:29:24 by scraeyme          #+#    #+#             */
-/*   Updated: 2024/10/14 21:56:25 by scraeyme         ###   ########.fr       */
+/*   Updated: 2024/10/15 10:07:04 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@ char	*get_until_newline(char *buffer, int fd);
 char	*ft_strjoin(char *s1, char *s2);
 char	*transform_buffer(char *buffer);
 size_t	ft_strlen(char *str);
+void	*ft_calloc(size_t nmemb, size_t size);
+void	ft_bzero(void *s, size_t n);
 
 #endif

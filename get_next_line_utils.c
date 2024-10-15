@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 20:29:18 by scraeyme          #+#    #+#             */
-/*   Updated: 2024/10/14 22:06:36 by scraeyme         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:15:15 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	i = 0;
 	while (s2[i])
 		str[j++] = s2[i++];
-	str[j] = '\0';
+	str[j] = 0;
 	free(s1);
 	return (str);
 }
@@ -67,7 +67,7 @@ char	*get_until_newline(char *buffer, int fd)
 	int		i;
 
 	i = 1;
-	line = malloc(BUFFER_SIZE + 1);
+	line = ft_calloc(BUFFER_SIZE + 1, 1);
 	if (!line)
 		return (NULL);
 	while (!has_newline(line) && i)
@@ -94,7 +94,7 @@ char	*transform_buffer(char *buffer)
 	i = 0;
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	str = malloc(i + 1);
+	str = malloc(i + 1 + (has_newline(buffer)));
 	if (!str)
 		return (NULL);
 	j = 0;
