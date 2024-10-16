@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 20:29:22 by scraeyme          #+#    #+#             */
-/*   Updated: 2024/10/16 16:36:54 by scraeyme         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:14:57 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,16 @@ char	*get_next_buffer(char *buffer)
 		i++;
 	if (buffer[i])
 		i++;
-	str = malloc(ft_strlen(&buffer[i]) + 1);
+	else
+	{
+		free(buffer);
+		return (NULL);
+	}
+	str = ft_calloc(ft_strlen(&buffer[i]) + 1, 1);
 	if (!str)
 		return (NULL);
 	while (buffer[i])
-	{
-		str[j] = buffer[i];
-		i++;
-		j++;
-	}
-	str[j] = 0;
+		str[j++] = buffer[i++];
 	free(buffer);
 	return (str);
 }
@@ -87,10 +87,9 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!buffer)
 	{
-		buffer = malloc(1);
+		buffer = ft_calloc(1, 1);
 		if (!buffer)
 			return (NULL);
-		buffer[0] = 0;
 	}
 	buffer = get_until_newline(buffer, fd);
 	if (!buffer || !buffer[0])
