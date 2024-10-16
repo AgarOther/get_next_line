@@ -18,7 +18,6 @@
 # endif
 # include <stdlib.h>
 # include <unistd.h>
-# include <fcntl.h>
 
 char	*get_next_line(int fd);
 int		has_newline(char *str);
@@ -28,5 +27,6 @@ char	*transform_buffer(char *buffer);
 size_t	ft_strlen(char *str);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	ft_bzero(void *s, size_t n);
+char	*free_all(char *buffer, char *line);
 
 #endif

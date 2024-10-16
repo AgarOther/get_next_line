@@ -46,23 +46,18 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t	i;
 	size_t	j;
 
-	i = 0;
-	j = 0;
-	if (!s2)
-	{
-		free(s1);
-		free(s2);
+	if (!s1 || !s2)
 		return (NULL);
-	}
-	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	str = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, 1);
 	if (!str)
 		return (NULL);
+	i = 0;
+	j = 0;
 	while (s1[i])
 		str[j++] = s1[i++];
 	i = 0;
 	while (s2[i])
 		str[j++] = s2[i++];
-	str[j] = 0;
 	free(s1);
 	return (str);
 }
@@ -76,23 +71,22 @@ char	*get_until_newline(char *buffer, int fd)
 	line = ft_calloc(BUFFER_SIZE + 1, 1);
 	if (!line || !buffer)
 		return (NULL);
-	while (!has_newline(line) && i)
+	while (!has_newline(buffer) && i > 0)
 	{
 		i = read(fd, line, BUFFER_SIZE);
 		if (i == -1)
-		{
-			free(line);
-			free(buffer);
-			return (NULL);
-		}
+			return (free_all(buffer, line));
+		line[i] = 0;
 		buffer = ft_strjoin(buffer, line);
 		if (!buffer)
-		{
-			free(buffer);
 			return (NULL);
-		}
 	}
 	free(line);
+	if (i == 0 && !buffer[0])
+	{
+		free(buffer);
+		return (NULL);
+	}
 	return (buffer);
 }
 
@@ -101,24 +95,20 @@ char	*transform_buffer(char *buffer)
 	char		*str;
 	size_t		i;
 	size_t		j;
-	int			is_newline;
 
 	i = 0;
-	is_newline = 1;
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	if (buffer[i] == '\n')
-		is_newline = 0;
-	str = ft_calloc(i + 1 + (has_newline(buffer)), 1);
+	str = ft_calloc(i + 1 + (buffer[i] == '\n'), 1);
 	if (!str)
 		return (NULL);
 	j = 0;
-	while (j < i - is_newline)
+	while (j < i)
 	{
 		str[j] = buffer[j];
 		j++;
 	}
-	if (buffer[j] && buffer[j] == '\n')
+	if (buffer[j] == '\n')
 		str[j++] = '\n';
 	return (str);
 }

@@ -40,14 +40,19 @@ void	*ft_calloc(size_t nmemb, size_t size)
 			return (NULL);
 		return (result);
 	}
-	if ((long) nmemb < 0 || (long) size < 0)
-		return (NULL);
 	memsize = nmemb * size;
 	result = malloc(memsize);
 	if (!result)
 		return (NULL);
 	ft_bzero(result, memsize);
 	return (result);
+}
+
+char	*free_all(char *buffer, char *line)
+{
+	free(buffer);
+	free(line);
+	return (NULL);
 }
 
 char	*get_next_buffer(char *buffer)
@@ -57,21 +62,18 @@ char	*get_next_buffer(char *buffer)
 	char	*str;
 
 	i = 0;
-	j = 0;
-	if (!buffer)
-		return (NULL);
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	if (buffer[i])
-		i++;
-	else
+	if (!buffer[i])
 	{
 		free(buffer);
 		return (NULL);
 	}
+	i++;
 	str = ft_calloc(ft_strlen(&buffer[i]) + 1, 1);
 	if (!str)
 		return (NULL);
+	j = 0;
 	while (buffer[i])
 		str[j++] = buffer[i++];
 	free(buffer);
@@ -95,47 +97,6 @@ char	*get_next_line(int fd)
 	if (!buffer || !buffer[0])
 		return (NULL);
 	line = transform_buffer(buffer);
-	if (!line)
-		return (NULL);
 	buffer = get_next_buffer(buffer);
 	return (line);
 }
-// #include <stdio.h>
-// int	main(int argc, char **argv)
-// {
-// 	int	fd;
-// 	(void) argc;
-
-// 	fd = open(argv[1], O_RDONLY);
-// 	char *s = get_next_line(fd);
-// 	printf("%s", s);
-// 	free(s);
-// 	// s = get_next_line(fd);
-// 	// printf("%s", s);
-// 	// free(s); 
-// 	// s = get_next_line(fd);
-// 	// printf("%s", s);
-// 	// free(s);
-// 	// s = get_next_line(fd);
-// 	// printf("%s", s);
-// 	// free(s);
-// 	// s = get_next_line(fd);
-// 	// printf("%s", s);
-// 	// free(s);
-// 	// s = get_next_line(fd);
-// 	// printf("%s", s);
-// 	// free(s);
-// 	// s = get_next_line(fd);
-// 	// printf("%s", s);
-// 	// free(s);
-// 	// s = get_next_line(fd);
-// 	// printf("%s", s);
-// 	// free(s);
-// 	// s = get_next_line(fd);
-// 	// printf("%s", s);
-// 	// free(s);
-// 	// s = get_next_line(fd);
-// 	// printf("%s", s);
-// 	// free(s);
-// 	close(fd);
-// }
