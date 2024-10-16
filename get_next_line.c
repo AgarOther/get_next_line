@@ -40,6 +40,8 @@ void	*ft_calloc(size_t nmemb, size_t size)
 			return (NULL);
 		return (result);
 	}
+	if ((long) nmemb < 0 || (long) size < 0)
+		return (NULL);
 	memsize = nmemb * size;
 	result = malloc(memsize);
 	if (!result)
