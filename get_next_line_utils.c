@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 20:29:18 by scraeyme          #+#    #+#             */
-/*   Updated: 2024/10/15 11:15:15 by scraeyme         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:36:16 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*get_until_newline(char *buffer, int fd)
 
 	i = 1;
 	line = ft_calloc(BUFFER_SIZE + 1, 1);
-	if (!line)
+	if (!line || !buffer)
 		return (NULL);
 	while (!has_newline(line) && i)
 	{
@@ -76,9 +76,9 @@ char	*get_until_newline(char *buffer, int fd)
 		if (i == -1)
 		{
 			free(line);
+			free(buffer);
 			return (NULL);
 		}
-		line[i] = 0;
 		buffer = ft_strjoin(buffer, line);
 	}
 	free(line);
@@ -90,24 +90,24 @@ char	*transform_buffer(char *buffer)
 	char		*str;
 	size_t		i;
 	size_t		j;
+	int			is_newline;
 
 	i = 0;
+	is_newline = 1;
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	str = malloc(i + 1 + (has_newline(buffer)));
+	if (buffer[i] == '\n')
+		is_newline = 0;
+	str = ft_calloc(i + 1 + (has_newline(buffer)), 1);
 	if (!str)
 		return (NULL);
 	j = 0;
-	while (j < i)
+	while (j < i - is_newline)
 	{
 		str[j] = buffer[j];
 		j++;
 	}
 	if (buffer[j] && buffer[j] == '\n')
-	{
-		str[j] = '\n';
-		j++;
-	}
-	str[j] = 0;
+		str[j++] = '\n';
 	return (str);
 }

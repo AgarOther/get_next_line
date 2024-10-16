@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 20:29:22 by scraeyme          #+#    #+#             */
-/*   Updated: 2024/10/15 19:18:16 by scraeyme         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:36:54 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*get_next_line(int fd)
 		buffer[0] = 0;
 	}
 	buffer = get_until_newline(buffer, fd);
-	if (!buffer)
+	if (!buffer || !buffer[0])
 		return (NULL);
 	line = transform_buffer(buffer);
 	if (!line)
@@ -102,26 +102,33 @@ char	*get_next_line(int fd)
 	return (line);
 }
 // #include <stdio.h>
-// int	main(void)
+// int	main(int argc, char **argv)
 // {
 // 	int	fd;
+// 	(void) argc;
 
-// 	fd = open("test.txt", O_RDONLY);
+// 	fd = open(argv[1], O_RDONLY);
 // 	char *s = get_next_line(fd);
 // 	printf("%s", s);
 // 	free(s);
-// 	s = get_next_line(fd);
-// 	printf("%s", s);
-// 	free(s);
-// 	s = get_next_line(fd);
-// 	printf("%s", s);
-// 	free(s);
-// 	s = get_next_line(fd);
-// 	printf("%s", s);
-// 	free(s);
-// 	s = get_next_line(fd);
-// 	printf("%s", s);
-// 	free(s);
+// 	// s = get_next_line(fd);
+// 	// printf("%s", s);
+// 	// free(s); 
+// 	// s = get_next_line(fd);
+// 	// printf("%s", s);
+// 	// free(s);
+// 	// s = get_next_line(fd);
+// 	// printf("%s", s);
+// 	// free(s);
+// 	// s = get_next_line(fd);
+// 	// printf("%s", s);
+// 	// free(s);
+// 	// s = get_next_line(fd);
+// 	// printf("%s", s);
+// 	// free(s);
+// 	// s = get_next_line(fd);
+// 	// printf("%s", s);
+// 	// free(s);
 // 	// s = get_next_line(fd);
 // 	// printf("%s", s);
 // 	// free(s);
