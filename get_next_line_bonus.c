@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 20:29:22 by scraeyme          #+#    #+#             */
-/*   Updated: 2024/10/16 17:14:57 by scraeyme         ###   ########.fr       */
+/*   Created: 2024/10/17 10:35:34 by scraeyme          #+#    #+#             */
+/*   Updated: 2024/10/17 10:35:34 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	ft_bzero(void *s, size_t n)
 {
@@ -86,21 +86,21 @@ char	*get_next_buffer(char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	static char	*buffer[1024];
 	char		*line;
 
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
-	if (!buffer)
+	if (!buffer[fd])
 	{
-		buffer = ft_calloc(1, 1);
-		if (!buffer)
+		buffer[fd] = ft_calloc(1, 1);
+		if (!buffer[fd])
 			return (NULL);
 	}
-	buffer = get_until_newline(buffer, fd);
-	if (!buffer || !buffer[0])
+	buffer[fd] = get_until_newline(buffer[fd], fd);
+	if (!buffer[fd] || !buffer[fd][0])
 		return (NULL);
-	line = transform_buffer(buffer);
-	buffer = get_next_buffer(buffer);
+	line = transform_buffer(buffer[fd]);
+	buffer[fd] = get_next_buffer(buffer[fd]);
 	return (line);
 }
