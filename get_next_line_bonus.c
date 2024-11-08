@@ -102,5 +102,10 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = transform_buffer(buffer[fd]);
 	buffer[fd] = get_next_buffer(buffer[fd]);
+	if (buffer[fd] && !buffer[fd][0])
+	{
+		free(buffer[fd]);
+		buffer[fd] = NULL;
+	}
 	return (line);
 }
